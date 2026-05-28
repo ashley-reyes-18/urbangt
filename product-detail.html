@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Producto - urbangt</title>
+
+    <!-- FOUC prevention -->
+    <script>
+        (function() {
+            var theme = localStorage.getItem('urbangt-theme');
+            if (theme === 'light') return;
+            document.documentElement.classList.add('dark');
+        })();
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Configuracion de Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0b192c',
+                        secondary: '#f5f5dc',
+                        accent: '#E6A100',
+                        'orange-accent': '#FF6B35',
+                        'cyan-accent': '#00D4FF'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Bebas Neue', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-secondary dark:bg-primary text-primary dark:text-secondary antialiased transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- ===== NAVBAR ===== -->
+    <header id="navbar" class="sticky top-0 z-50 bg-gradient-to-r from-secondary/90 to-secondary/80 dark:from-primary/90 dark:to-primary/80 backdrop-blur-md border-b-2 border-accent shadow-lg transition-all duration-300">
+        <nav class="max-w-7xl mx-auto px-4 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <a href="index.html" class="flex-shrink-0">
+                    <span class="font-display text-4xl lg:text-5xl tracking-tight bg-gradient-to-r from-accent via-orange-accent to-cyan-accent bg-clip-text text-transparent hover:scale-110 transition-transform duration-300">
+                        urbangt
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex items-center space-x-2">
+                    <a href="index.html" class="px-6 py-2 text-sm font-bold rounded-full bg-gradient-to-r from-accent to-orange-accent text-primary hover:shadow-lg transition-all duration-300">
+                        Inicio
+                    </a>
+                </div>
+
+                <div class="flex items-center space-x-3 lg:space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-full text-accent bg-accent/10 hover:bg-accent/20 transition-all duration-300 hover:scale-110">
+                        <svg id="theme-icon-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                    </button>
+
+                    <a href="cart.html" class="relative p-2 rounded-full text-orange-accent bg-orange-accent/10 hover:bg-orange-accent/20 transition-all duration-300 hover:scale-110">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                        </svg>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-gradient-to-r from-accent to-orange-accent text-primary text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center hidden">
+                            0
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ===== BREADCRUMB ===== -->
+    <div class="bg-secondary/50 dark:bg-primary/50 border-b border-accent/20">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8 py-4">
+            <div class="flex items-center space-x-2 text-sm">
+                <a href="index.html" class="text-accent hover:text-orange-accent transition-colors">Inicio</a>
+                <span class="text-primary/50 dark:text-secondary/50">/</span>
+                <a href="index.html" class="text-accent hover:text-orange-accent transition-colors" id="category-breadcrumb">Categoría</a>
+                <span class="text-primary/50 dark:text-secondary/50">/</span>
+                <span class="text-primary dark:text-secondary font-semibold" id="product-name-breadcrumb">Producto</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN PRODUCT CONTENT ===== -->
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 lg:px-8 py-12 lg:py-20">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+
+            <!-- ===== PRODUCT IMAGE ===== -->
+            <div class="space-y-4">
+                <div class="relative h-96 lg:h-[600px] bg-gradient-to-br from-accent/10 to-orange-accent/10 rounded-3xl border-2 border-accent/30 overflow-hidden group">
+                    <img id="product-image" src="" alt="Producto" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <span id="product-badge" class="absolute top-6 right-6 px-4 py-2 bg-gradient-to-r from-orange-accent to-accent text-primary font-bold rounded-full text-sm shadow-lg">
+                        NUEVO
+                    </span>
+                </div>
+
+                <!-- Thumbnails (simuladas) -->
+                <div class="grid grid-cols-4 gap-3">
+                    <div class="h-24 bg-gradient-to-br from-accent/20 to-orange-accent/20 rounded-xl border-2 border-accent/30 cursor-pointer hover:border-accent transition-all hover:scale-105">
+                        <img id="product-image" src="" alt="" class="w-full h-full object-cover rounded-lg">
+                    </div>
+                    <div class="h-24 bg-gradient-to-br from-orange-accent/20 to-cyan-accent/20 rounded-xl border-2 border-orange-accent/30 cursor-pointer hover:border-orange-accent transition-all hover:scale-105">
+                        <img id="product-image" src="" alt="" class="w-full h-full object-cover rounded-lg opacity-60">
+                    </div>
+                    <div class="h-24 bg-gradient-to-br from-cyan-accent/20 to-accent/20 rounded-xl border-2 border-cyan-accent/30 cursor-pointer hover:border-cyan-accent transition-all hover:scale-105">
+                        <img id="product-image" src="" alt="" class="w-full h-full object-cover rounded-lg opacity-60">
+                    </div>
+                    <div class="h-24 bg-gradient-to-br from-accent/20 to-cyan-accent/20 rounded-xl border-2 border-accent/30 cursor-pointer hover:border-accent transition-all hover:scale-105">
+                        <img id="product-image" src="" alt="" class="w-full h-full object-cover rounded-lg opacity-60">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== PRODUCT INFO ===== -->
+            <div class="space-y-8">
+
+                <!-- Header -->
+                <div class="space-y-4 border-b border-primary/10 dark:border-secondary/10 pb-6">
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <p class="text-sm font-bold text-accent uppercase tracking-wider mb-2" id="product-category">Categoría</p>
+                            <h1 class="font-display text-4xl lg:text-5xl tracking-tight text-primary dark:text-secondary" id="product-name">Nombre del Producto</h1>
+                        </div>
+                    </div>
+
+                    <!-- Rating -->
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-2">
+                            <div class="flex gap-1" id="product-rating">
+                                <span class="text-lg text-accent">★★★★★</span>
+                            </div>
+                            <span class="text-sm text-primary/60 dark:text-secondary/60">
+                                <span id="product-reviews">0</span> reseñas
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-primary/50 dark:text-secondary/50">
+                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                            <span id="product-stock">En stock</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="space-y-3 bg-gradient-to-br from-accent/5 to-orange-accent/5 p-6 rounded-2xl border border-accent/20">
+                    <div class="flex items-baseline gap-3">
+                        <p class="text-4xl font-bold bg-gradient-to-r from-accent to-orange-accent bg-clip-text text-transparent" id="product-price">$0.00</p>
+                        <p class="text-xl line-through text-primary/40 dark:text-secondary/40" id="product-original-price">$0.00</p>
+                        <p class="text-sm font-bold text-orange-accent bg-orange-accent/10 px-3 py-1 rounded-full" id="product-discount">-30%</p>
+                    </div>
+                    <p class="text-sm text-primary/60 dark:text-secondary/60">
+                        Ahorras <span id="product-savings" class="font-bold text-orange-accent">$0.00</span>
+                    </p>
+                </div>
+
+                <!-- Description -->
+                <div class="space-y-3">
+                    <h3 class="font-bold text-lg text-primary dark:text-secondary">Descripción</h3>
+                    <p class="text-primary/70 dark:text-secondary/70 leading-relaxed" id="product-description">
+                        Descripción del producto
+                    </p>
+                </div>
+
+                <!-- Material & Care -->
+                <div class="grid grid-cols-2 gap-4 bg-secondary/50 dark:bg-primary/50 p-6 rounded-2xl border border-primary/10 dark:border-secondary/10">
+                    <div>
+                        <p class="text-sm font-bold text-primary/60 dark:text-secondary/60 uppercase tracking-wider mb-2">Material</p>
+                        <p class="text-primary dark:text-secondary font-semibold" id="product-material">100% Algodón</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-primary/60 dark:text-secondary/60 uppercase tracking-wider mb-2">Cuidados</p>
+                        <p class="text-primary dark:text-secondary font-semibold" id="product-care">Lavar a mano</p>
+                    </div>
+                </div>
+
+                <!-- Size & Color Selection -->
+                <div class="space-y-6">
+                    <!-- Talla -->
+                    <div class="space-y-3">
+                        <label class="font-bold text-primary dark:text-secondary">
+                            Selecciona Talla
+                            <span class="text-orange-accent">*</span>
+                        </label>
+                        <div class="grid grid-cols-4 lg:grid-cols-5 gap-2" id="size-options">
+                            <!-- Generado dinámicamente -->
+                        </div>
+                    </div>
+
+                    <!-- Color -->
+                    <div class="space-y-3">
+                        <label class="font-bold text-primary dark:text-secondary">
+                            Selecciona Color
+                            <span class="text-orange-accent">*</span>
+                        </label>
+                        <div class="grid grid-cols-4 lg:grid-cols-5 gap-2" id="color-options">
+                            <!-- Generado dinámicamente -->
+                        </div>
+                    </div>
+
+                    <!-- Cantidad -->
+                    <div class="space-y-3">
+                        <label class="font-bold text-primary dark:text-secondary">Cantidad</label>
+                        <div class="flex items-center gap-3 bg-secondary/50 dark:bg-primary/50 p-2 rounded-xl border border-primary/10 dark:border-secondary/10 w-fit">
+                            <button id="qty-minus" class="w-10 h-10 rounded-lg bg-accent/20 text-accent hover:bg-accent hover:text-primary transition-all font-bold">−</button>
+                            <input type="number" id="qty-input" value="1" min="1" max="10" class="w-12 text-center bg-transparent font-bold text-primary dark:text-secondary outline-none">
+                            <button id="qty-plus" class="w-10 h-10 rounded-lg bg-accent/20 text-accent hover:bg-accent hover:text-primary transition-all font-bold">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add to Cart Button -->
+                <button id="add-to-cart-btn" class="w-full py-4 bg-gradient-to-r from-accent to-orange-accent text-primary font-bold text-lg rounded-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                    Añadir al Carrito
+                </button>
+
+                <!-- Wishlist & Share -->
+                <div class="flex gap-3">
+                    <button class="flex-1 py-3 border-2 border-cyan-accent text-cyan-accent font-bold rounded-xl hover:bg-cyan-accent hover:text-primary transition-all duration-300">
+                        ♡ Guardar
+                    </button>
+                    <button class="flex-1 py-3 border-2 border-accent text-accent font-bold rounded-xl hover:bg-accent hover:text-primary transition-all duration-300">
+                        Compartir
+                    </button>
+                </div>
+
+                <!-- Info Cards -->
+                <div class="grid grid-cols-3 gap-3 pt-6 border-t border-primary/10 dark:border-secondary/10">
+                    <div class="text-center space-y-2">
+                        <div class="text-2xl">🚚</div>
+                        <p class="text-xs font-bold text-primary dark:text-secondary">Envío Gratis</p>
+                        <p class="text-xs text-primary/50 dark:text-secondary/50">Sobre $100</p>
+                    </div>
+                    <div class="text-center space-y-2">
+                        <div class="text-2xl">↩️</div>
+                        <p class="text-xs font-bold text-primary dark:text-secondary">Devoluciones</p>
+                        <p class="text-xs text-primary/50 dark:text-secondary/50">30 días</p>
+                    </div>
+                    <div class="text-center space-y-2">
+                        <div class="text-2xl">🛡️</div>
+                        <p class="text-xs font-bold text-primary dark:text-secondary">Garantía</p>
+                        <p class="text-xs text-primary/50 dark:text-secondary/50">1 año</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===== RELATED PRODUCTS ===== -->
+        <div class="mt-20 pt-12 border-t-2 border-accent/30">
+            <h2 class="font-display text-4xl tracking-tight text-primary dark:text-secondary mb-8">
+                Productos Relacionados
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="related-products">
+                <!-- Generado dinámicamente -->
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-gradient-to-b from-primary to-blue-950 dark:from-blue-950 dark:to-primary text-secondary border-t-2 border-accent transition-colors duration-300 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+                <div class="lg:col-span-1">
+                    <span class="font-display text-4xl tracking-tight bg-gradient-to-r from-accent to-orange-accent bg-clip-text text-transparent">urbangt</span>
+                    <p class="mt-4 text-sm text-secondary/70 leading-relaxed max-w-xs">
+                        Streetwear culture. Ropa con actitud para la calle.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-display text-xl tracking-wide text-accent mb-6">Ayuda</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-secondary/70 hover:text-accent transition-colors">Preguntas Frecuentes</a></li>
+                        <li><a href="#" class="text-sm text-secondary/70 hover:text-accent transition-colors">Envío</a></li>
+                        <li><a href="#" class="text-sm text-secondary/70 hover:text-accent transition-colors">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-display text-xl tracking-wide text-orange-accent mb-6">Empresa</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-secondary/70 hover:text-orange-accent transition-colors">Sobre Nosotros</a></li>
+                        <li><a href="#" class="text-sm text-secondary/70 hover:text-orange-accent transition-colors">Carreras</a></li>
+                        <li><a href="#" class="text-sm text-secondary/70 hover:text-orange-accent transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-display text-xl tracking-wide text-cyan-accent mb-6">Legal</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-secondary/70 hover:text-cyan-accent transition-colors">Privacidad</a></li>
+                        <li><a href="#" class="text-sm text-secondary/70 hover:text-cyan-accent transition-colors">Términos</a></li>
+                        <li><a href="#" class="text-sm text-secondary/70 hover:text-cyan-accent transition-colors">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-6 border-t border-accent/20 text-center text-xs text-secondary/50">
+                &copy; 2026 urbangt. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="assets/js/product-detail.js"></script>
+</body>
+</html>
